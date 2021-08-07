@@ -7,4 +7,7 @@ const { boardController } = require("../controller");
 // * POST /create
 router.post("/", checkToken, boardController.create.post);
 
+// * GET /list
+router.get("/", boardController.list.get);
+
 module.exports = router;
