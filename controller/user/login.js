@@ -25,7 +25,7 @@ module.exports = {
         if (isMatch) {
           // jwt
           const accessToken = jwt.sign(
-            { _id: userInfo._id },
+            { id: userInfo.id },
             process.env.JWT_ACCESS_SECRET,
             { expiresIn: "3h" }
           );
