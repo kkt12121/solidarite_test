@@ -12,6 +12,10 @@ module.exports = (sequelize, DataTypes) => {
       this.belongsTo(models.user, {
         foreignKey: "userId",
       });
+
+      this.hasMany(models.like, {
+        foreignKey: "id",
+      });
     }
   }
   board.init(

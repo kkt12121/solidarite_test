@@ -1,5 +1,6 @@
 const { board } = require("../../models");
 const { user } = require("../../models");
+const { like } = require("../../models");
 
 module.exports = {
   post: async (req, res) => {
@@ -17,7 +18,7 @@ module.exports = {
       return res.status(403).json({ data: "제목은 30자 이하 입니다." });
     }
 
-    // 모든 조건에 충족하면 게시물을 생선한다
+    // 모든 조건에 충족하면 게시물을 생성한다
     const boardCreate = await board.create({
       userId: userId,
       title: title,
@@ -25,6 +26,11 @@ module.exports = {
     });
     // 생성한 게시물의 id값을 저장한다
     req.params.id = boardCreate.id;
+
+    // // 게시물을 생성하는 동시 like 테이블도 생성시킨다
+    // like.create({
+    //   boardId: boardCreate.id,
+    // });
 
     // 생성한 게시물에 유저의 닉네임을 포함시킨다
     const boardInfo = await board.findOne({

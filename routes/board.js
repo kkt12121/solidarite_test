@@ -10,4 +10,7 @@ router.post("/", checkToken, boardController.create.post);
 // * GET /list
 router.get("/", boardController.list.get);
 
+// * POST /like
+router.post("/:id/like", checkToken, boardController.like.post);
+
 module.exports = router;
