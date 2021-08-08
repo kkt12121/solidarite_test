@@ -37,7 +37,7 @@ module.exports = {
             }
           );
 
-          // 좋아요를 눌렀다면 like 테이블을 만들어서 유저가 해당 게시글에 좋아요를 눌렀다는걸 남긴다
+          // like 테이블을 만들어서 유저가 해당 게시글에 좋아요를 눌렀다는걸 남긴다
           await like.create({
             boardId: boardId,
             userId: userId,
@@ -56,6 +56,11 @@ module.exports = {
           });
 
           return res.status(200).json({ boardInfo });
+        } else {
+          // 이미 좋아요를 눌렀다면 400에러
+          return res
+            .status(400)
+            .json({ data: "이미 좋아요를 누른 상태입니다." });
         }
       } else {
         // 토큰이 만료 되었다면 401에러

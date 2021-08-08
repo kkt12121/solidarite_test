@@ -15,4 +15,7 @@ router.post("/:id/like", boardController.like.post);
 // * GET /page
 router.get("/:id", boardController.page.get);
 
+// * DELETE /delete
+router.delete("/:id", boardController.delete.delete);
+
 module.exports = router;

@@ -9,14 +9,12 @@ module.exports = {
   post: async (req, res) => {
     const { email, password } = req.body;
 
-    // 로그인 시도하는 이메일이 db에 일치하는 이메일 확인
+    // 로그인 시도하는 이메일이 db에 저장되어있는 이메일인지 확인
     const userInfo = await user.findOne({
       where: { email: email },
     });
-    // 만약 일치하는 이메일이 없으면 403에러
-    if (!userInfo) {
-      return res.status(403).json({ data: "존재하지 않는 이메일 입니다." });
-    } else {
+
+    if (userInfo) {
       // 일치한다면 로직에 적은 패스워드가 db에 암호화로 저장된 패스워드와 일치하는지 확인
       bcrypt.compare(password, userInfo.password, async (err, isMatch) => {
         if (err) {
@@ -36,6 +34,9 @@ module.exports = {
           });
         }
       });
+    } else {
+      // 만약 일치하는 이메일이 없으면 403에러
+      return res.status(403).json({ data: "존재하지 않는 이메일 입니다." });
     }
   },
 };
