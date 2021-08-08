@@ -1,6 +1,7 @@
 const { user } = require("../../models");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
+const { generateAccessToken } = require("../../middleware/checkToken");
 const dotenv = require("dotenv");
 dotenv.config();
 
@@ -24,11 +25,7 @@ module.exports = {
         // 비밀번호가 일치하다면 토큰생성후 로그인
         if (isMatch) {
           // jwt
-          const accessToken = jwt.sign(
-            { id: userInfo.id },
-            process.env.JWT_ACCESS_SECRET,
-            { expiresIn: "3h" }
-          );
+          const accessToken = generateAccessToken(userInfo);
           // 패스워드를 제외한 유저 정보
           const { password, ...data } = { ...userInfo.dataValues };
 
