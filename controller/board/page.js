@@ -100,13 +100,11 @@ module.exports = {
           }
         } else {
           // 토큰이 만료 되었다면 401에러
-          return res
-            .status(401)
-            .json({ data: "토큰이 만료되었습니다. 재로그인 해주세요" });
+          return res.status(401).json({ message: "권한이 없습니다." });
         }
       }
     } else {
-      return res.status(404).json({ data: "해당 게시물이 없습니다." });
+      return res.status(404).json({ message: "해당 게시물이 없습니다." });
     }
   },
 };

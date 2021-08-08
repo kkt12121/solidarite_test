@@ -3,7 +3,7 @@ const { user } = require("../../models");
 
 module.exports = {
   get: async (req, res) => {
-    // 필요한 정보만 담아서 모든 게시글 목록을 보낸다
+    // 게시물이 있다면 필요한 정보들만 담아서 보낸다
     const boardList = await board.findAll({
       include: [
         {
@@ -13,7 +13,6 @@ module.exports = {
       ],
       attributes: { exclude: ["isLike", "updatedAt"] },
     });
-
     return res.status(200).json({ boardList });
   },
 };

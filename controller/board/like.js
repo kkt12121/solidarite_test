@@ -60,17 +60,15 @@ module.exports = {
           // 이미 좋아요를 눌렀다면 400에러
           return res
             .status(400)
-            .json({ data: "이미 좋아요를 누른 상태입니다." });
+            .json({ message: "이미 좋아요를 누른 상태입니다." });
         }
       } else {
         // 토큰이 만료 되었다면 401에러
-        return res
-          .status(401)
-          .json({ data: "토큰이 만료되었습니다. 재로그인 해주세요" });
+        return res.status(401).json({ message: "권한이 없습니다." });
       }
     } else {
       // 헤더에 authorization이 없다면 401에러
-      return res.status(401).json({ data: "토큰이 없습니다." });
+      return res.status(401).json({ message: "토큰이 없습니다." });
     }
   },
 };

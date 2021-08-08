@@ -17,12 +17,14 @@ module.exports = {
 
         // 하나의 컬럼이라도 비었을 경우 400에러
         if (!title || !content) {
-          return res.status(400).json({ data: "제목 또는 내용이 없습니다." });
+          return res
+            .status(400)
+            .json({ message: "제목 또는 내용이 없습니다." });
         }
 
         // 제목의 길이가 30자가 넘어가면 403에러
         if (title.length > 30) {
-          return res.status(403).json({ data: "제목은 30자 이하 입니다." });
+          return res.status(403).json({ message: "제목은 30자 이하 입니다." });
         }
 
         // 모든 조건에 충족하면 게시물을 생성한다
@@ -52,13 +54,11 @@ module.exports = {
         return res.status(201).json({ data });
       } else {
         // 토큰이 만료 되었다면 401에러
-        return res
-          .status(401)
-          .json({ data: "토큰이 만료되었습니다. 재로그인 해주세요" });
+        return res.status(401).json({ message: "권한이 없습니다." });
       }
     } else {
       // 헤더에 authorization이 없다면 401에러
-      return res.status(401).json({ data: "토큰이 없습니다." });
+      return res.status(401).json({ message: "토큰이 없습니다." });
     }
   },
 };
