@@ -99,8 +99,29 @@ module.exports = {
             return res.status(200).json({ boardInfo });
           }
         } else {
-          // 토큰이 만료 되었다면 401에러
-          return res.status(401).json({ message: "권한이 없습니다." });
+          // 토큰이 만료 되었다면 비로그인 상태이기에 isLike값을 false로 반환한다
+          await board.update(
+            {
+              isLike: false,
+            },
+            {
+              where: { id: boardId },
+            }
+          );
+
+          // 필요한 게시물의 정보를 보내준다
+          const boardInfo = await board.findOne({
+            where: { id: boardId },
+            include: [
+              {
+                model: user,
+                attributes: ["nickname"],
+              },
+            ],
+            attributes: { exclude: ["updatedAt"] },
+          });
+
+          return res.status(200).json({ boardInfo });
         }
       }
     } else {
